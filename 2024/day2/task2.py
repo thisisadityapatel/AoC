@@ -1,14 +1,15 @@
 def parser(filename: str):
     store = []
-    with open(filename, 'r') as file:
+    with open(filename, "r") as file:
         for line in file:
             store.append(list(map(int, line.split())))
     return store
 
+
 def validate_report(report):
     dir_flag = 0
     for i in range(1, len(report)):
-        diff = report[i] - report[i-1]
+        diff = report[i] - report[i - 1]
         if diff == 0:
             return False
         if dir_flag == 0:
@@ -17,14 +18,16 @@ def validate_report(report):
             return False
     return True
 
+
 def problem_dampner(report):
     for i in range(len(report)):
-        if validate_report(report[:i] + report[i+1:]):
+        if validate_report(report[:i] + report[i + 1 :]):
             return True
     return False
 
-if __name__ == '__main__':
-    reports = parser('data.txt')
+
+if __name__ == "__main__":
+    reports = parser("data.txt")
     counter = 0
     for report in reports:
         if validate_report(report):
@@ -32,4 +35,3 @@ if __name__ == '__main__':
         elif problem_dampner(report):
             counter += 1
     print(counter)
-
