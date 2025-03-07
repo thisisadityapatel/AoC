@@ -48,3 +48,4 @@ if __name__ == "__main__":
     print(len(antinodes))
     end_time = time.time()
     print(f"execution time: {(end_time - start_time):.6f} seconds")
+    
