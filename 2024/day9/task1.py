@@ -1,6 +1,8 @@
 import time
 import collections
 
+# Note: brut force approach, havn't yet had the time to refine it
+
 
 def collect_data(filename):
     return list(map(int, list(open(filename).read())))
