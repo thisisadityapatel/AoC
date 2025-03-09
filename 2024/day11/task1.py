@@ -47,9 +47,12 @@ def solve(nums, blinks):
             elif category == 2:
                 head.val *= 2024
             else:
-                temp = str(head.val)
-                head.val = int(str(temp)[0 : int(len(temp) / 2)])
-                node = ListNode(int(str(temp)[int(len(temp) / 2) :]))
+                temp = head.val
+                num_digits = len(str(temp))
+                half_digits = num_digits // 2
+                divisor = 10**half_digits
+                head.val = temp // divisor
+                node = ListNode(temp % divisor)
                 node.next = head.next
                 head.next = node
                 head = head.next
