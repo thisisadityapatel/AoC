@@ -4,8 +4,10 @@ import time
 import collections
 import math
 
+
 def get_data(filename):
     return list(map(int, open(filename).read().split()))
+
 
 def solve(nums):
     tracker = collections.Counter(nums)
@@ -13,7 +15,7 @@ def solve(nums):
     def mutate(num):
         if num == 0:
             return [1]
-        digit_length  = int(math.log10(num)) + 1
+        digit_length = int(math.log10(num)) + 1
         if digit_length % 2 == 0:
             divisor = 10 ** (digit_length // 2)
             return [num % divisor, num // divisor]
@@ -27,9 +29,10 @@ def solve(nums):
         tracker = new_tracker
     return sum(tracker.values())
 
+
 if __name__ == "__main__":
     start_time = time.time()
-    nums = get_data('data.txt')
+    nums = get_data("data.txt")
     output = solve(nums)
     print(output)
     end_time = time.time()
