@@ -1,37 +1,36 @@
-import time
-import math
-import collections
+# optimizations using mutation algorithm for caching and also a mathematical approach for calculating the length of the string.
 
+import time
+import collections
+import math
 
 def get_data(filename):
     return list(map(int, open(filename).read().split()))
 
+def solve(nums):
+    tracker = collections.Counter(nums)
 
-def solve(nums, blinks):
-    stones = collections.Counter(nums)
-
-    def mutate(stone):
-        if stone == 0:
+    def mutate(num):
+        if num == 0:
             return [1]
-        digits = str(stone)
-        half, remainder = divmod(len(digits), 2)
-        if remainder == 0:
-            return map(int, (digits[:half], digits[half:]))
-        return [stone * 2024]
+        digit_length  = int(math.log10(num)) + 1
+        if digit_length % 2 == 0:
+            divisor = 10 ** (digit_length // 2)
+            return [num % divisor, num // divisor]
+        return [num * 2024]
 
-    for _ in range(blinks):
-        new_stones = collections.defaultdict(int)
-        for stone, count in stones.items():
-            for child in mutate(stone):
-                new_stones[child] += count
-        stones = new_stones
-    return sum(stones.values())
-
+    for _ in range(75):
+        new_tracker = collections.defaultdict(int)
+        for num, count in tracker.items():
+            for subnum in mutate(num):
+                new_tracker[subnum] += count
+        tracker = new_tracker
+    return sum(tracker.values())
 
 if __name__ == "__main__":
     start_time = time.time()
-    data = get_data("data.txt")
-    result = solve(data, 75)
-    print(result)
+    nums = get_data('data.txt')
+    output = solve(nums)
+    print(output)
     end_time = time.time()
-    print(f"execution time: {(end_time - start_time):.06f} seconds")
+    print(f"execution time: {(end_time - start_time):.6f} seconds")
