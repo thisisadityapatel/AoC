@@ -6,6 +6,12 @@ def get_data(filename):
     return [list(line) for line in open(filename).read().splitlines()]
 
 
+def corner_exists(flags):
+    if sum(flags) == 0:
+        return True
+    return False
+
+
 def solve(grid):
     row, col = len(grid), len(grid[0])
     tracker = set()
@@ -28,116 +34,88 @@ def solve(grid):
 
                         # Getting the surrounding pixels
                         top = (
-                            (head[0] - 1, head[1])
-                            if 0 <= head[0] - 1 < row and 0 <= head[1] < col
-                            else None
+                            1
+                            if 0 <= head[0] - 1 < row
+                            and 0 <= head[1] < col
+                            and grid[head[0] - 1][head[1]] == type
+                            else 0
                         )
                         top_right = (
-                            (head[0] - 1, head[1] + 1)
-                            if 0 <= head[0] - 1 < row and 0 <= head[1] + 1 < col
-                            else None
+                            1
+                            if 0 <= head[0] - 1 < row
+                            and 0 <= head[1] + 1 < col
+                            and grid[head[0] - 1][head[1] + 1] == type
+                            else 0
                         )
                         right = (
-                            (head[0], head[1] + 1)
-                            if 0 <= head[0] < row and 0 <= head[1] + 1 < col
-                            else None
+                            1
+                            if 0 <= head[0] < row
+                            and 0 <= head[1] + 1 < col
+                            and grid[head[0]][head[1] + 1] == type
+                            else 0
                         )
                         bottom_right = (
-                            (head[0] + 1, head[1] + 1)
-                            if 0 <= head[0] + 1 < row and 0 <= head[1] + 1 < col
-                            else None
+                            1
+                            if 0 <= head[0] + 1 < row
+                            and 0 <= head[1] + 1 < col
+                            and grid[head[0] + 1][head[1] + 1] == type
+                            else 0
                         )
                         bottom = (
-                            (head[0] + 1, head[1])
-                            if 0 <= head[0] + 1 < row and 0 <= head[1] < col
-                            else None
+                            1
+                            if 0 <= head[0] + 1 < row
+                            and 0 <= head[1] < col
+                            and grid[head[0] + 1][head[1]] == type
+                            else 0
                         )
                         bottom_left = (
-                            (head[0] + 1, head[1] - 1)
-                            if 0 <= head[0] + 1 < row and 0 <= head[1] - 1 < col
-                            else None
+                            1
+                            if 0 <= head[0] + 1 < row
+                            and 0 <= head[1] - 1 < col
+                            and grid[head[0] + 1][head[1] - 1] == type
+                            else 0
                         )
                         left = (
-                            (head[0], head[1] - 1)
-                            if 0 <= head[0] < row and 0 <= head[1] - 1 < col
-                            else None
+                            1
+                            if 0 <= head[0] < row
+                            and 0 <= head[1] - 1 < col
+                            and grid[head[0]][head[1] - 1] == type
+                            else 0
                         )
                         top_left = (
-                            (head[0] - 1, head[1] - 1)
-                            if 0 <= head[0] - 1 < row and 0 <= head[1] - 1 < col
-                            else None
+                            1
+                            if 0 <= head[0] - 1 < row
+                            and 0 <= head[1] - 1 < col
+                            and grid[head[0] - 1][head[1] - 1] == type
+                            else 0
                         )
 
-                        # checking the top right for corner
-                        if top and top_right and right:
-                            temp_count = sum(
-                                1
-                                for val in [top, top_right, right]
-                                if val and grid[val[0]][val[1]] == type
-                            )
-                            if temp_count == 2:
-                                local_corners += 1
-                            elif (
-                                grid[top[0]][top[1]] != type
-                                and grid[right[0]][right[1]] != type
-                            ):
-                                local_corners += 1
-
-                        elif not top_right and not right and not top:
+                        if sum([top, top_right, right]) == 0:
+                            local_corners += 1
+                        elif top_right == 0 and top + right == 2:
+                            local_corners += 1
+                        elif top_right == 1 and top + right == 0:
                             local_corners += 1
 
-                        # checking the top left for corner
-                        if top and top_left and left:
-                            temp_count = sum(
-                                1
-                                for val in [top, top_left, left]
-                                if val and grid[val[0]][val[1]] == type
-                            )
-                            if temp_count == 2:
-                                local_corners += 1
-                            elif (
-                                grid[top[0]][top[1]] != type
-                                and grid[left[0]][left[1]] != type
-                            ):
-                                local_corners += 1
-
-                        if not top_left and not left and not top:
+                        if sum([top, top_left, left]) == 0:
+                            local_corners += 1
+                        elif top_left == 0 and top + left == 2:
+                            local_corners += 1
+                        elif top_left == 1 and top + left == 0:
                             local_corners += 1
 
-                        # checking the bottom right for corner
-                        if bottom and bottom_right and right:
-                            temp_count = sum(
-                                1
-                                for val in [bottom, bottom_right, right]
-                                if val and grid[val[0]][val[1]] == type
-                            )
-                            if temp_count == 2:
-                                local_corners += 1
-                            elif (
-                                grid[bottom[0]][bottom[1]] != type
-                                and grid[right[0]][right[1]] != type
-                            ):
-                                local_corners += 1
-
-                        if not bottom_right and not bottom and not right:
+                        if sum([bottom, bottom_right, right]) == 0:
+                            local_corners += 1
+                        elif bottom_right == 0 and bottom + right == 2:
+                            local_corners += 1
+                        elif bottom_right == 1 and bottom + right == 0:
                             local_corners += 1
 
-                        # checking the bottom left for corner
-                        if bottom and bottom_left and left:
-                            temp_count = sum(
-                                1
-                                for val in [bottom, bottom_left, left]
-                                if val and grid[val[0]][val[1]] == type
-                            )
-                            if temp_count == 2:
-                                local_corners += 1
-                            elif (
-                                grid[bottom[0]][bottom[1]] != type
-                                and grid[left[0]][left[1]] != type
-                            ):
-                                local_corners += 1
-
-                        if not bottom and not bottom_left and not left:
+                        if sum([bottom, bottom_left, left]) == 0:
+                            local_corners += 1
+                        elif bottom_left == 0 and bottom + left == 2:
+                            local_corners += 1
+                        elif bottom_left == 1 and bottom + left == 0:
                             local_corners += 1
 
                         for di in [-1, 0, 1]:
@@ -150,9 +128,6 @@ def solve(grid):
                                     local_traverse((head[0] + di, head[1] + dj), type)
 
                 local_traverse((i, j), grid[i][j])
-                print(grid[i][j])
-                print(local_tracker)
-                print(local_corners)
                 tracker = tracker.union(local_tracker)
                 result += local_corners * len(local_tracker)
     return result
@@ -160,7 +135,7 @@ def solve(grid):
 
 if __name__ == "__main__":
     start_time = time.time()
-    grid = get_data("testing.txt")
+    grid = get_data("data.txt")
     output = solve(grid)
     print(output)
     end_time = time.time()
