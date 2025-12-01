@@ -1,5 +1,4 @@
 import time
-from turtle import pos
 
 
 def parser(filename: str):

@@ -1,5 +1,4 @@
 import time
-from turtle import pos
 
 
 def parser(filename: str):
@@ -15,7 +14,6 @@ def solve(filename: str):
     position = 50
     for action in actions:
         direction, change = action[0], int(action[1:])
-        print(position, action, counter)
         if direction == "L":
             if position - change < 0:
                 counter += abs((position - change) // 100)
