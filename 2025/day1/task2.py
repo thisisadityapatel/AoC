@@ -15,12 +15,15 @@ def solve(filename: str):
     position = 50
     for action in actions:
         direction, change = action[0], int(action[1:])
+        print(position, action, counter)
         if direction == "L":
+            if position - change < 0:
+                counter += abs((position - change) // 100)
             position = (position - change) % 100
         else:
+            if position + change > 99:
+                counter += (position + change) // 100
             position = (position + change) % 100
-        if position == 0:
-            counter += 1
     return counter
 
 
