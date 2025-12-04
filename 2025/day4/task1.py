@@ -11,7 +11,7 @@ def input_parser(filename: str) -> list[str]:
     return grid
 
 
-def solve(grid: list[str]):
+def solve(grid: list[str]) -> int:
     rows = len(grid)
     cols = len(grid[0])
     counter = 0
