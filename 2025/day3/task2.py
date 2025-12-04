@@ -26,7 +26,6 @@ def max_jolt(bank: str) -> int:
     choice_numbers = bank[: len(bank) - 12]
     max_number = ""
     while len(max_number) != 12:
-        # print(choice_numbers, current_numbers, max_number)
         head = int(current_numbers[0])
         if not choice_numbers or not current_numbers:
             new_size = 12 - len(max_number)
@@ -46,7 +45,6 @@ def max_jolt(bank: str) -> int:
             max_number += str(head)
             choice_numbers = ""
             current_numbers = current_numbers[1:]
-    # print(int(max_number))
     return int(max_number)
 
 
