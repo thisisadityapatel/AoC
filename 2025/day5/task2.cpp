@@ -36,6 +36,7 @@ std::pair<std::vector<Range>, std::vector<long>> input_parser(std::string filena
     return {ranges, ids};
 }
 
+
 std::vector<Range> resolve_ranges(std::vector<Range> ranges){
     std::sort(ranges.begin(), ranges.end(), [](Range& a, Range& b){
         return a.start < b.start;
@@ -58,24 +59,10 @@ std::vector<Range> resolve_ranges(std::vector<Range> ranges){
     return new_ranges;
 }
 
-
-int counter(std::vector<Range> ranges, std::vector<long> ids){
-    int i = 0;
+int count_range(std::vector<Range> ranges){
     int count = 0;
-    std::sort(ids.begin(), ids.end());
-    for(long& id: ids){
-        while(i < ranges.size()){
-            if(ranges[i].start <= id && id <= ranges[i].end){
-                count += 1;
-                break;
-            }
-            if(ranges[i].start > id){
-                break;
-            }
-            if(ranges[i].end < id){
-                i += 1;
-            }
-        }
+    for(Range& range: ranges){
+        count += range.end - range.start + 1;
     }
     return count;
 }
@@ -86,7 +73,7 @@ int main(){
     auto& ranges = result.first;
     auto& ids    = result.second;
     std::vector<Range> new_ranges = resolve_ranges(result.first);
-    int count = counter(new_ranges,ids);
+    int count = count_range(new_ranges);
     std::cout << count << std::endl;
     return 0;
 }
