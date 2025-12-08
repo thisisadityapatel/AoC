@@ -39,6 +39,7 @@ def make_tree(coordinates: list[list[int]]):
 def aggregate_chains(nearest: list):
     tracker = collections.defaultdict(bool)
     chains = []
+    last_join_points = []
     for i in range(len(nearest)):
         point1, point2, _ = nearest[i]
         if not tracker[point1]:
@@ -74,22 +75,21 @@ def aggregate_chains(nearest: list):
                         tracker[point2] = True
                         break
         if len(chains) == 1 and len(chains[0]) == 1000:
+            last_join_points = [point1, point2]
             break
-    return chains
+    return last_join_points
 
 
-def count_chains(chains):
-    chain_length = [len(chain) for chain in chains]
-    chain_length.sort(reverse=True)
-    return math.prod(chain_length[:3])
+def count_points(last_join_points):
+    return last_join_points[0][0] * last_join_points[1][0]
 
 
 if __name__ == "__main__":
     start_time = time.time()
     coordinates = input_parser("data.txt")
     tree = make_tree(coordinates)
-    chains = aggregate_chains(tree[:1000])
-    result = count_chains(chains)
+    last_join_points = aggregate_chains(tree)
+    result = count_points(last_join_points)
     print(result)
     end_time = time.time()
     print(f"Execution time: {end_time - start_time:.6f} seconds")
