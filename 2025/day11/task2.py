@@ -11,30 +11,34 @@ def input_parser(filename: str) -> dict:
 
 
 def path_counter(data):
-    count = 0
+    mem = {}
 
     def dfs(server, tracker):
-        outputs = data[server]
-        if "out" in outputs:
-            if tracker >= 2:
-                nonlocal count
-                count += 1
-            return
-        flag = False
-        for output in outputs:
-            if output in ["fft", "dac"]:
-                flag = flag or dfs(output, tracker + 1)
-            else:
-                flag = flag or dfs(output, tracker)
-        return flag
+        if server == "out":
+            return 1 if tracker >= 2 else 0
 
-    dfs("svr", 0)
-    return count
+        key = (server, tracker)
+        if key in mem:
+            return mem[key]
+
+        outputs = data[server]
+
+        total = 0
+        for nxt in outputs:
+            if nxt in ("fft", "dac"):
+                total += dfs(nxt, tracker + 1)
+            else:
+                total += dfs(nxt, tracker)
+
+        mem[key] = total
+        return total
+
+    return dfs("svr", 0)
 
 
 if __name__ == "__main__":
     start_time = time.time()
-    data = input_parser("test.txt")
+    data = input_parser("data.txt")
     count = path_counter(data)
     end_time = time.time()
     print(count)
