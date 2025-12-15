@@ -65,5 +65,6 @@ if __name__ == "__main__":
     data = transform(data)
     count = counter(data)
     end_time = time.time()
+
     print(count)
     print(f"Execution time: {end_time - start_time:.6f} seconds")

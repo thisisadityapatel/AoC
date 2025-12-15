@@ -41,7 +41,7 @@ def find_min(point):
             return steps
 
         for button in buttons:
-            # Skip if same as previous button (optimization)
+            # skip if same as previous button (optimization).
             if button == prev_btn:
                 continue
 
@@ -69,5 +69,6 @@ if __name__ == "__main__":
     data = transform(data)
     count = counter(data)
     end_time = time.time()
+
     print(f"Total: {count}")
     print(f"Execution time: {end_time - start_time:.6f} seconds")
