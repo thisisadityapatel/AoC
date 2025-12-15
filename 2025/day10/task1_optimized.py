@@ -18,7 +18,7 @@ def transform(data):
             [i for i, value in enumerate(point[0][1:-1]) if value == "#"]
         )
 
-        # capture buttons availanle.
+        # capture buttons available.
         buttons = []
         for button_text in point[1:-1]:
             buttons.append(frozenset(map(int, button_text[1:-1].split(","))))
