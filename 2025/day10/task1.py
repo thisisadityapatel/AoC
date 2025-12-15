@@ -22,7 +22,9 @@ def transform(data):
     return new_data
 
 
-def find_min(point):
+def find_min(
+    point,
+):  # DFS backtracking algorithm (optimized soliution uses BFS because we want to exist the first time we come across a solution).
     tracker = []
 
     def dfs(button_count, path_odd, prev_point, max_iter):
