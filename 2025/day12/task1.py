@@ -36,7 +36,7 @@ def count(data_points):
 
 
 if __name__ == "__main__":
-    # HINT: each shape is of hte size 7 so im assuming if the given shape is 85 percent filled and 15 percent empty the presents will fit lol.
+    # HINT: each shape is of hte size 7 so im assuming if the given shape is 85 percent filled and 15 percent empty the presents will fit.
     start_time = time.time()
     data_points = input_parser("data.txt")
     print(data_points)
